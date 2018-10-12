@@ -1,0 +1,23 @@
+.vscode/
+
+ENV/
+
+PurBeurre/__pycache__/
+PurBeurre/__pycache__/settings.cpython-36.pyc
+PurBeurre/substitution_app/__pycache__/
+PurBeurre/substitution_app/migrations/__pycache__/
+substitution_app/__pycache__/
+substitution_app/migrations/__pycache__/
+PurBeurre/substitution_app/tests/__pycache__/
+tests/__pycache__/
+__pycache__/
+
+PurBeurre/PurBeurre/__pycache__/settings.cpython-36.pyc
+PurBeurre/substitution_app/__pycache__/callapi.cpython-36.pyc
+PurBeurre/substitution_app/__pycache__/models.cpython-36.pyc
+PurBeurre/substitution_app/__pycache__/tests.cpython-36.pyc
+PurBeurre/substitution_app/__pycache__/urls.cpython-36.pyc
+PurBeurre/substitution_app/__pycache__/views.cpython-36.pyc
+
+tools/
+Notes de projet.md

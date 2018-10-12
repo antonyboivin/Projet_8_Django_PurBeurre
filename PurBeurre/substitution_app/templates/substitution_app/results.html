@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+  <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/css/creative.css' %}" />
+
+  {% if user.is_authenticated %}
+
+    <!-- Navigation / authenticated user-->
+    <header class="resultshead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>Vous pouvez remplacer :</strong>
+            </h1>
+            <hr>
+            <h1 class="text-uppercase">
+            <a href="{% url 'product display' apiQuery.code %}">
+              <img class="img-responsive" src="{{ apiQuery.image_small_url }}" alt="{{ apiQuery.product_name_fr }}">
+            </a>
+            <strong>{{ apiQuery.product_name_fr }}</strong>
+            </h1>
+            <hr>
+            <h1 class="text-uppercase">
+            <strong>par :</strong>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <body>
+      {% for item in substitution %}
+        {% if forloop.first %}<div class="row resultFirstLine">{% endif %}
+          <div class="col-sm-4 text-center">
+            <a href="{% url 'product display' item.code %}">
+              <img class="img-responsive under" src="{{ item.image_small_url }}" alt="{{ item.product_name }}">
+
+                {% if item.nutrition_grade_fr == 'a' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_A.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'b' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_B.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'c' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_C.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'd' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_D.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'e' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_E.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">     
+                {% else %}
+                
+                {% endif %}
+                <p>{{ item.product_name }}</p>
+            </a>
+
+            <form class="text-center" action="{% url 'my products' %}" method="post">
+              {% csrf_token %}
+              
+              <input type="hidden" class="hidden" value="{{ item.code }}" name="code">
+              <input type="hidden" class="hidden" value="{{ item.url }}" name="url">
+              <input type="hidden" class="hidden" value="{{ item.product_name }}" name="product_name">
+              <input type="hidden" class="hidden" value="{{ item.nutrition_grade_fr }}" name="nutrition_grade_fr">
+              <input type="hidden" class="hidden" value="{{ item.main_category }}" name="main_category">
+              <input type="hidden" class="hidden" value="{{ item.main_category_fr }}" name="main_category_fr">
+              <input type="hidden" class="hidden" value="{{ item.image_small_url }}" name="image_small_url">
+
+              <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-success img-responsive text-center">Sauvegarder</button>
+              </div>
+
+            </form>
+
+              {% if forloop.counter|divisibleby:'3' %}<div class="clearfix"></div>{% endif %}
+          </div>
+          
+        {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+        {% if forloop.last %}</div>{% endif %}
+      {% endfor %}
+    </body>
+
+{% else %}
+
+    <!-- Navigation / anonymous user-->
+    <header class="resultshead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>Vous pouvez remplacer :</strong>
+            </h1>
+            <hr>
+            <h1 class="text-uppercase">
+            <a href="{% url 'product display' apiQuery.code %}">
+              <img class="img-responsive" src="{{ apiQuery.image_small_url }}" alt="{{ apiQuery.product_name_fr }}">
+            </a>
+            <strong>{{ apiQuery.product_name_fr }}</strong>
+            <hr>
+            <h1 class="text-uppercase">
+            <strong>par :</strong>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <body>
+      {% for item in substitution %}
+        {% if forloop.first %}<div class="row resultFirstLine">{% endif %}
+          <div class="col-sm-4 text-center">
+            <a href="{% url 'product display' item.code %}">
+              <img class="img-responsive under" src="{{ item.image_small_url }}" alt="{{ item.product_name }}">
+
+                {% if item.nutrition_grade_fr == 'a' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_A.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'b' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_B.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'c' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_C.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'd' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_D.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">
+                {% elif item.nutrition_grade_fr == 'e' %}
+                  <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_E.png' %}" width="100" height="75" alt="{{ item.nutrition_grade_fr }}">     
+                {% else %}
+                
+                {% endif %}
+                <p>{{ item.product_name }}{{ item.product_name_fr }}</p>
+            </a>
+
+              {% if forloop.counter|divisibleby:'3' %}<div class="clearfix"></div>{% endif %}
+          </div>
+          <div>
+            
+          </div>
+        {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+        {% if forloop.last %}</div>{% endif %}
+      {% endfor %}
+    </body> 
+
+{% endif %}    
+
+{% endblock %}

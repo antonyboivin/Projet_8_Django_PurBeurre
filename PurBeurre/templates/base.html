@@ -1,0 +1,155 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pur beurre</title>
+
+    <!--favicon-->
+    <link rel="shortcut icon" type="image/png" href="{% static 'substitution_app/favicon.ico' %}"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/vendor/bootstrap/css/bootstrap.css' %}" />
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/vendor/font-awesome/css/font-awesome.min.css' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/vendor/magnific-popup/magnific-popup.css' %}" />
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/css/creative.css' %}" />
+
+
+  </head>
+
+  <body id="page-top">
+
+{% if user.is_authenticated %}
+
+    <!-- Navigation / authenticated user-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container"> 
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'home page' %}"><img id="logo" src="{% static 'substitution_app/img/logo_pur_beurre.png' %}" alt="logo">Pur Beurre</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item pt-3 pr-5">
+                  <form class="navbar-form navbar-right inline-form row" id="form-nav-search" action="{% url 'product select' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="search" class="input-sm form-control col-sm-7" placeholder="Recherche" name="userQuery">
+                    <button type="submit" id="button-nav-search" class="btn btn-primary btn-sm col-sm-4 offset-sm-1"><span class="glyphicon glyphicon-eye-open"></span> Chercher</button>
+                  </form>    
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'my account' %}"><img src="{% static 'substitution_app/img/account_logo.png' %}" title="Mon compte" alt="Mon compte"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'my products' %}"><img src="{% static 'substitution_app/img/carrot.png' %}" title="Mes aliments" alt="Mes aliments"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'deconnection' %}"><img src="{% static 'substitution_app/img/disconnect.png' %}" title="Déconnexion" alt="Déconnexion"></a>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+
+{% else %}
+
+    <!-- Navigation / anonymous user-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container"> 
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'home page' %}"><img id="logo" src="{% static 'substitution_app/img/logo_pur_beurre.png' %}" alt="logo">Pur Beurre</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+
+              <li class="nav-item pt-3 pr-5">
+                  <form class="navbar-form navbar-right inline-form row" id="form-nav-search"> 
+                    <input type="search" id="disabledInput" class="input-sm form-control col-sm-7  form-control" placeholder="Connectez-vous" disabled>
+                    <button type="button" id="button-nav-search" class="btn btn-primary btn-sm col-sm-4 offset-sm-1 disabled"><span class="glyphicon glyphicon-eye-open"></span> Chercher</button>
+                  </form>    
+                </li>
+
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'connection' %}"><img src="{% static 'substitution_app/img/account_logo.png' %}" title="Se connecter" alt="Se connecter"></a>
+            </li>
+          </ul>
+      </div>
+      </div>
+  </nav>
+{% endif %}
+
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+
+  <section id="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Antony Boivin - 2018 - Pour OpenClassrooms</h2>
+            <p></p>
+            <hr class="my-4">
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-12 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <a class="mentions" href="{% url 'Legal Notice' %}"><img id="logoLegalNotice" src="{% static 'substitution_app/img/legalNotice.png' %}" alt="logo Legal Notice">Mentions Légales</a>
+              <p class="text-muted mb-0"></p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <a class="mentions" href="https://openclassrooms.com"><img id="logoOC" src="{% static 'substitution_app/img/logo_oc.png' %}" alt="logo Openclassrooms">OpenClassrooms</a>
+              <p class="text-muted mb-0"></p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <a class="mentions" href="https://github.com/"><img id="logoGitHub" src="{% static 'substitution_app/img/logo_github.png' %}" alt="logo GitHub">GitHub</a>
+              <p class="text-muted mb-0"></p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+  <footer>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'substitution_app/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'substitution_app/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'substitution_app/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'substitution_app/vendor/scrollreveal/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'substitution_app/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'substitution_app/js/creative.min.js' %}"></script>
+
+  </footer>
+
+</html>

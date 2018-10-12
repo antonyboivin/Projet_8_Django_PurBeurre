@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+  <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/css/creative.css' %}" />
+
+  <header class="resultshead text-center text-white d-flex">
+    <div class="container my-auto">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <h1 class="text-uppercase">
+            <strong>Désolé</strong>
+          </h1>
+          <h2 class="text-uppercase">
+            <strong>Nous n'avons pas trouvé de produit correspondant à :</strong>
+          </h2>
+          <hr>
+          <h1 class="text-uppercase">
+            <strong>{{ userQuery }}</strong>
+          </h1>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+{% endblock %}

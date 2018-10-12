@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+  {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/css/creative.css' %}" />
+  {% endblock %}
+
+    <header class="accounthead text-center text-white d-flex">
+        <div class="container my-auto">
+          <div class="row">
+            <div class="col-lg-10 mx-auto">
+              <h1 class="text-uppercase">
+                <strong>Bienvenue</strong>
+              </h1>
+              <hr>
+              <h1 class="text-uppercase">
+                <strong>{{ username }} !</strong>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <body>
+          <div class="row resultFirstLine">
+            <div class="col-lg-6">
+                <button type="submit" class="btn btn-primary btn-sm  pull-right"><span class="glyphicon glyphicon-eye-open"></span>Adresse mail :</button>
+            </div>
+            <div class="col-lg-6 pull-left">
+              <p class="mailfont">{{ usermail }}</p>
+            </div>
+          </div>
+      </body>
+
+{% endblock %}

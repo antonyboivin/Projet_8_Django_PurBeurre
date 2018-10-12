@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/css/creative.css' %}" />
+{% endblock %}
+
+  <header class="product_selecthead text-center text-white d-flex">
+    <div class="container my-auto">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <h1 class="text-uppercase">
+            <strong>Voici le résultat de la recherche pour :</strong>
+          </h1>
+          <hr>
+          <h1 class="text-uppercase">
+            <strong>{{ userQuery }}</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <body>
+  {% for item in apiQuery %}
+    {% if item.code == "0" %}
+      <div class="row ">
+        <div class="col-sm-3 text-center">
+          <a href="{% url 'results' item.code %}">
+            <img class="img-responsive" src="{% static 'substitution_app/img/not_found_product.png' %}" alt="Produit introuvable">
+          </a>
+        </div>
+          <div class="col-sm-9 text-center not_found_message">
+          <p>Quelle misère..., le produit demandé est introuvable</p>
+          <p>Essayez de vérifier l'orthographe du produit recherché</p>
+        </div>
+      </div>
+    {% else %}
+      {% if forloop.first %}<div class="row resultFirstLine">{% endif %}
+        <div class="col-sm-3 text-center">
+          <a href="{% url 'results' item.code %}">
+            <img class="img-responsive" src="{{ item.image_small_url }}" alt="{{ item.product_name_fr }}">
+          </a>
+          <p>{{ item.product_name_fr }}</p>
+            {% if forloop.counter|divisibleby:'4' %}<div class="clearfix"></div>{% endif %}
+        </div>
+      {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+      {% if forloop.last %}</div>{% endif %}
+    {% endif %}
+  {% endfor %}
+  </body>
+
+{% endblock %}

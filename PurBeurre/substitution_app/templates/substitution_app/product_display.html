@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block body %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'substitution_app/css/creative.css' %}" />
+{% endblock %}
+
+  <header class="product_display text-center text-white d-flex">
+    <div class="container my-auto">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <h1 class="text-uppercase">
+            <strong>{{ apiQuery.product_name_fr }}</strong>
+          </h1>
+          <hr>
+          <h1 class="text-uppercase">
+            <img class="img-responsive" src="{{ apiQuery.image_small_url }}" alt="{{ apiQuery.product_name_fr }}">
+            </h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <body> 
+      <div class="row resultFirstLine">
+        <div class="col-lg-6 text-center">
+          {% if apiQuery.nutrition_grade_fr == 'a' %}
+            <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_A.png' %}" alt="{{ apiQuery.nutrition_grade_fr }}">
+          {% elif apiQuery.nutrition_grade_fr == 'b' %}
+            <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_B.png' %}" alt="{{ apiQuery.nutrition_grade_fr }}">
+          {% elif apiQuery.nutrition_grade_fr == 'c' %}
+            <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_C.png' %}" alt="{{ apiQuery.nutrition_grade_fr }}">
+          {% elif apiQuery.nutrition_grade_fr == 'd' %}
+            <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_D.png' %}" alt="{{ apiQuery.nutrition_grade_fr }}">
+          {% elif apiQuery.nutrition_grade_fr == 'e' %}
+            <img class="img-responsive" src="{% static 'substitution_app/img/nutriscore_E.png' %}" alt="{{ apiQuery.nutrition_grade_fr }}">     
+          {% else %}
+          
+          {% endif %}
+        </div>
+        <div class="col-lg-6 text-center">
+          <p class="displtext">Repères nutritionnels</p>
+          <p class="displtext">pour 100g</p>
+        </div>
+      </div>
+        <div class="col-lg-12 text-center  resultFirstLine">
+          <form action="https://fr.openfoodfacts.org/produit/{{ apiQuery.code }}" method="POST">
+            {% csrf_token %} 
+            <button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span>Voir la fiche produit d'Open Food Facts</button>
+          </form>
+        </div>
+      </div>
+
+  </body>
+
+{% endblock %}
+
+
+
