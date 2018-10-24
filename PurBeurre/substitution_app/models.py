@@ -12,7 +12,7 @@ class ProductsA(models.Model):
 
     class Meta:
         verbose_name = "Produits A"
-        managed = False
+        managed = True
         db_table = 'products_A'
     
     def __str__(self):
@@ -31,7 +31,7 @@ class UserProducts(models.Model):
 
     class Meta:
         verbose_name = "Produits utilisateur"
-        managed = False
+        managed = True
         db_table = 'user_products'
 
     def __str__(self):

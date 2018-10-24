@@ -5,7 +5,7 @@ from .models import ProductsA, UserProducts
 from .callapi import Callapi
 
 
-# 
+
 
 class Userjourney(TestCase):
 
@@ -16,6 +16,7 @@ class Userjourney(TestCase):
         """
         response = self.client.get(reverse('home page'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'substitution_app/home_page.html')
 
     def test_search_for_product(self):
         """
@@ -34,6 +35,8 @@ class Userjourney(TestCase):
         response = self.client.post(reverse('product select'), {'apiQuery': apiQuery, 'userQuery' : userQuery})
 
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'substitution_app/product_select.html')
+
     
     def test_display_products_research(self):
         """
@@ -47,6 +50,10 @@ class Userjourney(TestCase):
         response = self.client.post(reverse('product select'), {'apiQuery': apiQuery, 'userQuery' : userQuery})
 
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'substitution_app/product_select.html')
+        self.assertContains(response, "nutella")
+        self.assertContains(response, "3017620429484")
+        self.assertContains(response, "e")
 
     def test_safe_products_display(self):
         """
@@ -54,7 +61,18 @@ class Userjourney(TestCase):
         En tant que Lily, quand j'ai choisi précisément le produit a substituer, 
         je m'attends à ce que l'application me propose une nouvelle page de produits sains.
         """
-        pass
+        database = ProductsA.objects.create(
+                code = '3017620429484',
+                url = 'https://uneurl',
+                product_name = 'Nutella',
+                nutrition_grade_fr = 'e',
+                main_category = ['fr:pates-a-tartiner'],
+                main_category_fr = 'Pâtes à tartiner',
+                image_small_url = 'https://static.openfoodfacts.org/images/products/301/762/042/9484/front_fr.147.200.jpg'
+            )
+        response = self.client.get(reverse('results', kwargs={'code': '3017620429484'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProductsA.objects.all().exists())
 
     def test_product_display_page(self):
         """
@@ -75,14 +93,25 @@ class Userjourney(TestCase):
             response = self.client.get(reverse('my account'))
             self.assertEqual(response.status_code, 200)
             self.client.logout()
+            self.assertTrue(User.objects.filter(username=self.username, email=self.email).exists())
     
     def test_my_products(self):
         """
         As Lily, I need to have access to a summary of all the products I have already substituted.
         En tant que Lily, je dois pouvoir avoir accès à un récapitulatif de tous les produits que j'ai déjà substitué.
         """
+        database = UserProducts.objects.create(
+                code = '3017620429484',
+                url = 'https://uneurl',
+                product_name = 'Nutella',
+                nutrition_grade_fr = 'e',
+                main_category = ['fr:pates-a-tartiner'],
+                main_category_fr = 'Pâtes à tartiner',
+                image_small_url = 'https://static.openfoodfacts.org/images/products/301/762/042/9484/front_fr.147.200.jpg'
+            )
         logged = self.client.login(username='usertest', password='usertest')
         if logged:
             response = self.client.get(reverse('my products'))
             self.assertEqual(response.status_code, 200)
             self.client.logout()
+            self.assertTrue(UserProducts.objects.all().exists())
